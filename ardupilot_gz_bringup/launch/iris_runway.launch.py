@@ -59,8 +59,8 @@ def generate_launch_description() -> LaunchDescription:
     launch_arguments = generate_launch_arguments()
 
     # Iris.
-    num_rows = 1
-    num_cols = 1
+    num_rows = 3
+    num_cols = 3
     num_robots = num_rows * num_rows
     robots = []
     for i in range(num_robots):
