@@ -25,16 +25,22 @@
   gz_type_name: "gz.msgs.Pose_V"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "imu"
-  gz_topic_name: "/world/map/model/iris/link/imu_link/sensor/imu_sensor/imu"
+- ros_topic_name: "lidar/imu" # Topic名、/lidar/imuなどと先頭にSlashをつけるとnamespaceが適用されなくなる。(iris0/~~のようにならなくなる。)
+  gz_topic_name: "/world/map/model/iris0/link/base_scan/sensor/imu_sensor/imu"
   ros_type_name: "sensor_msgs/msg/Imu"
   gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "scan"
-  gz_topic_name: "/lidar"
-  ros_type_name: "sensor_msgs/msg/LaserScan"
-  gz_type_name: "gz.msgs.LaserScan"
+# - ros_topic_name: "scan"
+#   gz_topic_name: "/lidar"
+#   ros_type_name: "sensor_msgs/msg/LaserScan"
+#   gz_type_name: "gz.msgs.LaserScan"
+#   direction: GZ_TO_ROS
+
+- ros_topic_name: "lidar/points"
+  gz_topic_name: "/lidar/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
 
 - ros_topic_name: "battery"

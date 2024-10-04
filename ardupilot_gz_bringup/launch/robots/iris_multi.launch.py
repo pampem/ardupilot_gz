@@ -97,12 +97,13 @@ def launch_sitl_dds(
         launch_arguments={
             # micro_ros_agent
             "transport": "udp4",
-            "micro_ros_agent_ns": f"{name}",
+            "micro_ros_agent_ns": f"{name}", #これ効いてなくない?
             "refs": PathJoinSubstitution(
                 [
                     FindPackageShare("ardupilot_sitl"),
                     "config",
-                    "dds_xrce_profile.xml",
+                    #"dds_xrce_profile.xml",　# これ今はない。AP_DDS/libraries/以下に過去存在したが、現在Obsolate. これを新規作成する?
+                    f"{name}dds_multiple_drone_ns_setting.xml", # Add, this file is below ardupilot_sitl/config/
                 ]
             ),
             "port": "2019",
@@ -124,7 +125,7 @@ def launch_sitl_dds(
                 pkg_ardupilot_sitl,
                 "config",
                 "default_params",
-                "dds_udp.parm",
+                "dds_udp.parm", #ここでDDS_ENABLE 1とDDS_UDP_PORT 2019を設定している
             ),
             "sim_address": f"{sim_address}",
             # mavproxy

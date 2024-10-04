@@ -118,7 +118,7 @@ def generate_launch_description():
 
     # Load SDF file.
     sdf_file = os.path.join(
-        pkg_ardupilot_gz_description, "models", "iris_with_lidar", "model.sdf"
+        pkg_ardupilot_gz_description, "models", "iris_with_3dlidar", "model.sdf"
     )
     with open(sdf_file, "r") as infp:
         robot_desc = infp.read()
