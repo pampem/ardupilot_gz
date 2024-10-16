@@ -284,7 +284,8 @@
 
 
     <link name="base_scan">
-      <pose>0 0 -0.075077 0 2.356192 0</pose> <!-- 　2.356192=3.14159-0.785398 = 180deg-45deg　裏返して、45度戻し。CHANGED! colcon build -packages-select ardupilot_gz_description <pose>0 0 -0.075077 0 -0.785398 0</pose> <pose>0 0 -0.075077 0 0.785398 0</pose>-->
+      <pose>0 0 -0.075077 3.141592 -0.5 0</pose> <!-- 前方を変更しないように、x軸回り(ロール軸)で180度回し、ピッチ軸で-45度回す。-->
+      <!-- <pose>0 0 -0.075077 0 2.356192 0</pose> 　2.356192=3.14159-0.785398 = 180deg-45deg　裏返して、45度戻し。CHANGED! colcon build -packages-select ardupilot_gz_description <pose>0 0 -0.075077 0 -0.785398 0</pose> <pose>0 0 -0.075077 0 0.785398 0</pose> -->
       <inertial>
         <mass>0.1</mass>
         <inertia>
@@ -343,9 +344,11 @@
         <visualize>true</visualize>
       </sensor>
       
-       <sensor name="imu_sensor" type="imu"> <!-- lidarのIMU-->
+      <sensor name="imu_sensor" type="imu"> <!-- lidarのIMU-->
+        <gz_frame_id>imu</gz_frame_id>
+        <pose>0 0 0 0 0 0</pose>
         <always_on>1</always_on>
-        <update_rate>50.0</update_rate>
+        <update_rate>100.0</update_rate>
         <imu>
           <topic>imu</topic>
           <angular_velocity>
@@ -361,6 +364,35 @@
         </imu>
       </sensor>
     </link>
+
+    <link name="forward_plate">
+      <pose>0.2 0 0 0 0 0</pose> <!-- 前方に配置する -->
+      <inertial>
+        <mass>0.00001</mass>
+        <inertia>
+          <ixx>0.00001</ixx>
+          <iyy>0.00001</iyy>
+          <izz>0.00001</izz>
+        </inertia>
+      </inertial>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.01 0.03 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 0 0 1</ambient>  <!-- 赤色のアンビエント光 -->
+          <diffuse>1 0 0 1</diffuse>  <!-- 赤色の拡散光 -->
+          <specular>0.5 0.5 0.5 1</specular>  <!-- 少し反射する -->
+        </material>
+      </visual>
+    </link>
+    <joint name="forward_plate_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>forward_plate</child>
+    </joint>
 
     <joint name="lidar_joint" type="revolute">
       <parent>base_link</parent>
