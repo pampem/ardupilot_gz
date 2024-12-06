@@ -284,8 +284,7 @@
 
 
     <link name="base_scan">
-      <pose>0 0 -0.075077 3.141592 -0.5 0</pose> <!-- 前方を変更しないように、x軸回り(ロール軸)で180度回し、ピッチ軸で-45度回す。-->
-      <!-- <pose>0 0 -0.075077 0 2.356192 0</pose> 　2.356192=3.14159-0.785398 = 180deg-45deg　裏返して、45度戻し。CHANGED! colcon build -packages-select ardupilot_gz_description <pose>0 0 -0.075077 0 -0.785398 0</pose> <pose>0 0 -0.075077 0 0.785398 0</pose> -->
+      <pose>0 0 -0.08 0 2.3 0</pose> <!-- 前方を変更しないように、x軸回り(ロール軸)で180度回し、ピッチ軸で-45度回す。-->
       <inertial>
         <mass>0.1</mass>
         <inertia>
@@ -296,7 +295,8 @@
       </inertial>
 
       <collision name="collision">
-        <pose>0 0 0 0 0 1.5708</pose> <!-- Z軸回りに90度回転 これでModelがx軸前をしっかり向くようになった。-->
+        <!-- modelの向きを実際と合わせるため補正 -->
+        <pose>0 0 0 0 0 1.5708</pose>
         <geometry>
           <mesh>
             <uri>model://iris_with_3dlidar/meshes/mid360.obj</uri>
