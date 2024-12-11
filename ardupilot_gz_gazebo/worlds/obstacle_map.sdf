@@ -1,10 +1,9 @@
 <?xml version="1.0" ?>
 <sdf version='1.10'>
-  <world name='empty'>
+  <world name='map'>
     <physics name='1ms' type='ignored'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>1000</real_time_update_rate>
     </physics>
 
     <plugin filename="gz-sim-physics-system"
@@ -40,9 +39,7 @@
       name="gz::sim::systems::NavSat">
     </plugin>
 
-    <gravity>0 0 -9.8000000000000007</gravity>
-    <magnetic_field>5.5644999999999998e-06 2.2875799999999999e-05 -4.2388400000000002e-05</magnetic_field>
-    <atmosphere type='adiabatic'/>
+   <atmosphere type='adiabatic'/>
     <scene>
       <ambient>0.400000006 0.400000006 0.400000006 1</ambient>
       <background>0.699999988 0.699999988 0.699999988 1</background>
@@ -1158,5 +1155,94 @@
         <falloff>0</falloff>
       </spot>
     </light>
+    
+        <!-- 北側の壁 -->
+    <model name='wall_north'>
+      <pose>0 15 2.5 0 0 0</pose>
+      <static>true</static>
+      <link name='wall_link'>
+        <collision name='wall_collision'>
+          <geometry>
+            <box>
+              <size>30 1 5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='wall_visual'>
+          <geometry>
+            <box>
+              <size>30 1 5</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 南側の壁 -->
+    <model name='wall_south'>
+      <pose>0 -15 2.5 0 0 0</pose>
+      <static>true</static>
+      <link name='wall_link'>
+        <collision name='wall_collision'>
+          <geometry>
+            <box>
+              <size>30 1 5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='wall_visual'>
+          <geometry>
+            <box>
+              <size>30 1 5</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 東側の壁 -->
+    <model name='wall_east'>
+      <pose>15 0 2.5 0 0 0</pose>
+      <static>true</static>
+      <link name='wall_link'>
+        <collision name='wall_collision'>
+          <geometry>
+            <box>
+              <size>1 30 5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='wall_visual'>
+          <geometry>
+            <box>
+              <size>1 30 5</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 西側の壁 -->
+    <model name='wall_west'>
+      <pose>-15 0 2.5 0 0 0</pose>
+      <static>true</static>
+      <link name='wall_link'>
+        <collision name='wall_collision'>
+          <geometry>
+            <box>
+              <size>1 30 5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='wall_visual'>
+          <geometry>
+            <box>
+              <size>1 30 5</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
   </world>
 </sdf>
