@@ -198,11 +198,11 @@ def launch_bridge(
         parameters=[
             {
                 "config_file": os.path.join(
-                    pkg_project_bringup, "config", "iris_lidar_bridge.yaml"
+                    pkg_project_bringup, "config", "iris_3d_lidar_bridge.yaml"
                 ),
-                "qos_overrides./tf_static.publisher.durability": "transient_local",
-                "qos_overrides./lidar/points.publisher.durability": "volatile",# これ効いてない
-                "qos_overrides./lidar/points.publisher.reliability": "best_effort",
+                # "qos_overrides./tf_static.publisher.durability": "transient_local",
+                # "qos_overrides./lidar/points.publisher.durability": "volatile",# これ効いてない
+                # "qos_overrides./lidar/points.publisher.reliability": "best_effort",
             }
         ],
         remappings=[

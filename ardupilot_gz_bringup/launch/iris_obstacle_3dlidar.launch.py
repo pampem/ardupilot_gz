@@ -65,7 +65,8 @@ def generate_launch_description():
     for i in range(num_robots):
         pos_x = float(i % num_cols) - 10.0
         pos_y = float(i // num_cols) - 10.0
-        pos_yaw = math.pi / 2.0 - math.pi / 4.0;
+        # pos_yaw = math.pi / 2.0 - math.pi / 4.0
+        pos_yaw = 0.0
 
         robot = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(

@@ -198,7 +198,7 @@
       <gazeboXYZToNED degrees="true">0 0 0 180 0 90</gazeboXYZToNED>
 
       <!-- Sensors -->
-      <imuName>imu_link::imu_sensor</imuName>
+      <!-- <imuName>imu_link::imu_sensor</imuName> -->
 
       <!-- Control channels -->
       <!--
@@ -344,8 +344,8 @@
         <visualize>true</visualize>
       </sensor>
       
-      <sensor name="imu_sensor" type="imu"> <!-- lidarのIMU-->
-        <gz_frame_id>imu</gz_frame_id>
+      <sensor name="lidar_imu_sensor" type="imu"> <!-- lidarのIMU-->
+        <gz_frame_id>lidar/imu</gz_frame_id>
         <pose>0 0 0 0 0 0</pose>
         <always_on>1</always_on>
         <update_rate>100.0</update_rate>
