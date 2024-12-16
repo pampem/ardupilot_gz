@@ -282,7 +282,6 @@
 
     </plugin>
 
-
     <link name="base_scan">
       <pose>0 0 -0.08 0 2.3 0</pose> <!-- 前方を変更しないように、x軸回り(ロール軸)で180度回し、ピッチ軸で-45度回す。-->
       <inertial>
@@ -343,27 +342,27 @@
         </lidar>
         <visualize>true</visualize>
       </sensor>
-      
-      <sensor name="lidar_imu_sensor" type="imu"> <!-- lidarのIMU-->
-        <gz_frame_id>lidar/imu</gz_frame_id>
-        <pose>0 0 0 0 0 0</pose>
+      <sensor name="imu_sensor" type="imu">
         <always_on>1</always_on>
-        <update_rate>100.0</update_rate>
-        <imu>
-          <topic>imu</topic>
-          <angular_velocity>
-            <x>0.02</x>
-            <y>0.02</y>
-            <z>0.02</z>
-          </angular_velocity>
-          <linear_acceleration>
-            <x>0.02</x>
-            <y>0.02</y>
-            <z>9.8</z>
-          </linear_acceleration>
-        </imu>
+        <update_rate>500</update_rate>
+        <visualize>true</visualize>
+        <topic>lidarimu</topic>
       </sensor>
     </link>
+    <joint name="lidar_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>base_scan</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+        </dynamics>
+      </axis>
+    </joint>
 
     <link name="forward_plate">
       <pose>0.2 0 0 0 0 0</pose> <!-- 前方に配置する -->
@@ -394,20 +393,7 @@
       <child>forward_plate</child>
     </joint>
 
-    <joint name="lidar_joint" type="revolute">
-      <parent>base_link</parent>
-      <child>base_scan</child>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-        <dynamics>
-          <damping>1</damping>
-        </dynamics>
-      </axis>
-    </joint>
+ 
 
   </model>
 

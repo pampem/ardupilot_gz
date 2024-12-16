@@ -26,7 +26,7 @@
   direction: GZ_TO_ROS
 
 - ros_topic_name: "lidar/imu" # Topic名、/lidar/imuなどと先頭にSlashをつけるとnamespaceが適用されなくなる。(iris0/~~のようにならなくなる。)
-  gz_topic_name: "/world/map/model/iris0/link/base_scan/sensor/lidar_imu_sensor/imu"
+  gz_topic_name: "/lidarimu"
   ros_type_name: "sensor_msgs/msg/Imu"
   gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS
