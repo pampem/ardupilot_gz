@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="fukushima_rtf">
+    <static>true</static>
+    <link name="link">
+      <!-- <pose>-181766.8 104051.4 -44.3 0 0 -1.57</pose> -->
+      <pose>0 0 -1.25 0 0 0</pose>
+      <!-- <pose>0 0 0 0 0 1.57079632679</pose> -->
+
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://fukushima_rtf/meshes/fukushima_fromFBX.obj</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://fukushima_rtf/meshes/fukushima_fromFBX.obj</uri>
+            <!-- <scale>1 1 1</scale> -->
+          </mesh>
+        </geometry>
+      </visual>
+
+    </link>
+  </model>
+</sdf>
