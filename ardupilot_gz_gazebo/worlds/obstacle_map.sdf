@@ -112,7 +112,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -126,7 +126,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -208,7 +208,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -222,7 +222,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -255,7 +255,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -269,7 +269,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -302,7 +302,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -316,7 +316,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -349,7 +349,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -363,7 +363,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -396,7 +396,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -410,7 +410,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -443,7 +443,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -457,7 +457,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -490,7 +490,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -504,7 +504,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -537,7 +537,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -551,7 +551,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -584,7 +584,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -598,7 +598,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -778,7 +778,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -792,7 +792,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -825,7 +825,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -839,7 +839,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -872,7 +872,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -886,7 +886,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -919,7 +919,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -933,7 +933,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -966,7 +966,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -980,7 +980,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -1013,7 +1013,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -1027,7 +1027,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -1060,7 +1060,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -1074,7 +1074,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -1107,7 +1107,7 @@
         <collision name='box_collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <surface>
@@ -1121,7 +1121,7 @@
         <visual name='box_visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>1 1 5</size>
             </box>
           </geometry>
           <material>
@@ -1164,14 +1164,14 @@
         <collision name='wall_collision'>
           <geometry>
             <box>
-              <size>30 1 5</size>
+              <size>20 1 5</size>
             </box>
           </geometry>
         </collision>
         <visual name='wall_visual'>
           <geometry>
             <box>
-              <size>30 1 5</size>
+              <size>20 1 5</size>
             </box>
           </geometry>
         </visual>
@@ -1186,14 +1186,14 @@
         <collision name='wall_collision'>
           <geometry>
             <box>
-              <size>30 1 5</size>
+              <size>20 1 5</size>
             </box>
           </geometry>
         </collision>
         <visual name='wall_visual'>
           <geometry>
             <box>
-              <size>30 1 5</size>
+              <size>20 1 5</size>
             </box>
           </geometry>
         </visual>
@@ -1208,14 +1208,14 @@
         <collision name='wall_collision'>
           <geometry>
             <box>
-              <size>1 30 5</size>
+              <size>1 20 5</size>
             </box>
           </geometry>
         </collision>
         <visual name='wall_visual'>
           <geometry>
             <box>
-              <size>1 30 5</size>
+              <size>1 20 5</size>
             </box>
           </geometry>
         </visual>
@@ -1230,19 +1230,37 @@
         <collision name='wall_collision'>
           <geometry>
             <box>
-              <size>1 30 5</size>
+              <size>1 20 5</size>
             </box>
           </geometry>
         </collision>
         <visual name='wall_visual'>
           <geometry>
             <box>
-              <size>1 30 5</size>
+              <size>1 20 5</size>
             </box>
           </geometry>
         </visual>
       </link>
     </model>
+
+    <include>
+      <uri>model://shelf</uri>
+      <name>shelf1</name>
+      <pose degrees="true">-10 -5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://shelf</uri>
+      <name>shelf2</name>
+      <pose degrees="true">-10 -14 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://hatchback</uri>
+      <name>hatchback1</name>
+      <pose degrees="true">-5 -10 0 0 0 0</pose>
+    </include>
 
   </world>
 </sdf>
