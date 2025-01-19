@@ -103,7 +103,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "gz_args": "-v4 -s -r "
-            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map.sdf"}' # このモデルではドローンはIncludeされていない。
+            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map_surrounded.sdf"}' # このモデルではドローンはIncludeされていない。
         }.items(),
     )
 
@@ -144,9 +144,9 @@ def generate_launch_description():
             gz_sim_gui,
         ]
         + robots
-        + [
-            rviz,
-        ]
+        # + [
+        #     rviz,
+        # ]
     )
 
 
