@@ -1262,5 +1262,53 @@
       <pose degrees="true">-5 -10 0 0 0 0</pose>
     </include>
 
-  </world>
+
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_0</name>
+      <pose>6.13 11.68 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_1</name>
+      <pose>10.69 -3.07 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_2</name>
+      <pose>3.73 7.67 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_3</name>
+      <pose>-2.43 -6.53 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_4</name>
+      <pose>7.99 -7.39 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_5</name>
+      <pose>0.28 -6.92 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_6</name>
+      <pose>11.44 1.05 0.50 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>model://pillar</uri>
+      <name>pillar_7</name>
+      <pose>-3.56 -4.22 0.50 0 0 0</pose>
+    </include>
+      </world>
 </sdf>
