@@ -59,13 +59,14 @@ def generate_launch_description():
 
     # Iris.
     num_rows = 1
-    num_cols = 1
+    num_cols = 2
     num_robots = num_rows * num_cols
     robots = []
     for i in range(num_robots):
-        pos_x = float(i % num_cols) - 10.0
-        pos_y = float(i // num_cols) - 10.0
-        # pos_yaw = math.pi / 2.0 - math.pi / 4.0
+        col = i % num_cols
+        row = i // num_cols
+        pos_x = float(col - (num_cols - 1) / 2.0)
+        pos_y = float(row - (num_rows - 1) / 2.0)
         pos_yaw = 0.0
 
         robot = IncludeLaunchDescription(
@@ -103,7 +104,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "gz_args": "-v4 -s -r "
-            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map_surrounded_many.sdf"}' # このモデルではドローンはIncludeされていない。
+            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map_surrounded.sdf"}' # このモデルではドローンはIncludeされていない。
         }.items(),
     )
 
@@ -112,17 +113,6 @@ def generate_launch_description():
             f'{Path(pkg_ros_gz_sim) / "launch" / "gz_sim.launch.py"}'
         ),
         launch_arguments={"gz_args": "-v4 -g"}.items(),
-    )
-
-    # RViz.
-    rviz = Node(
-        package="rviz2",
-        executable="rviz2",
-        arguments=[
-            "-d",
-            f'{Path(pkg_project_bringup) / "rviz" / "iris_with_lidar.rviz"}',
-        ],
-        condition=IfCondition(LaunchConfiguration("rviz")),
     )
 
     # return LaunchDescription(

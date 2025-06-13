@@ -1,9 +1,9 @@
 import random
 from pathlib import Path
 
-WORLD_SDF_PATH = (Path(__file__).parent.parent / "../ardupilot_gz_gazebo/worlds/obstacle_map_surrounded.sdf").resolve()
+WORLD_SDF_PATH = (Path(__file__).parent.parent / "../ardupilot_gz_gazebo/worlds/obstacle_map_surrounded_many.sdf").resolve()
 PILLAR_MODEL_NAME = "pillar"
-NUM_PILLARS = 8
+NUM_PILLARS = 30
 X_MIN, X_MAX = -14.0, 14.0
 Y_MIN, Y_MAX = -14.0, 14.0
 
@@ -34,7 +34,7 @@ def main():
     for i in range(NUM_PILLARS):
         x = random.uniform(X_MIN, X_MAX)
         y = random.uniform(Y_MIN, Y_MAX)
-        z = 0.5
+        z = 2.5
         new_lines.append(make_include_block(f"pillar_{i}", x, y, z))
     new_lines += lines[world_end:]
 
