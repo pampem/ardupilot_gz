@@ -60,14 +60,13 @@ def launch_robot_state_publisher(
     """Return a robot state publisher launch description."""
     # Packages.
     pkg_ardupilot_gazebo = get_package_share_directory("ardupilot_gazebo")
+    pkg_ardupilot_gz_description = get_package_share_directory(
+        "ardupilot_gz_description"
+    )
 
     # Get substitutions for arguments.
+    model = LaunchConfiguration("model").perform(context)
     name = LaunchConfiguration("name").perform(context)
-    instance = int(LaunchConfiguration("instance").perform(context))
-
-    # Compute ports
-    port_offset = 10 * instance
-    control_port = 9002 + port_offset
 
     # Set `SDF_PATH` required by `sdformat_urdf`.
     if "GZ_SIM_RESOURCE_PATH" in os.environ:
@@ -80,34 +79,10 @@ def launch_robot_state_publisher(
 
     # Load SDF file.
     sdf_file = os.path.join(
-        pkg_ardupilot_gazebo, "models", "iris_with_gimbal", "model.sdf"
+        pkg_ardupilot_gz_description, "models", model, "model.sdf" # "もともとはpkg_ardupilot_gazebo"
     )
     with open(sdf_file, "r") as infp:
         robot_desc = infp.read()
-
-    # Update SDFormat:
-    #
-    # <include> iris_with_standoffs
-    #   <name>iris</name>
-    #
-    # OdometryPublisher frames
-    #   <odom_frame>iris/odom</odom_frame>
-    #   <robot_base_frame>iris</robot_base_frame>
-    #
-    # ArduPilotPlugin port
-    #   <fdm_port_in>9002</fdm_port_in>
-    #
-    robot_desc = robot_desc.replace("<name>iris</name>", f"<name>{name}</name>")
-    robot_desc = robot_desc.replace(
-        "<odom_frame>iris/odom</odom_frame>", f"<odom_frame>{name}/odom</odom_frame>"
-    )
-    robot_desc = robot_desc.replace(
-        "<robot_base_frame>iris</robot_base_frame>",
-        f"<robot_base_frame>{name}</robot_base_frame>",
-    )
-    robot_desc = robot_desc.replace(
-        "<fdm_port_in>9002</fdm_port_in>", f"<fdm_port_in>{control_port}</fdm_port_in>"
-    )
 
     # print(robot_desc)
 
@@ -194,9 +169,11 @@ def launch_bridge(
         parameters=[
             {
                 "config_file": os.path.join(
-                    pkg_project_bringup, "config", "iris_bridge_multi.yaml"
+                    pkg_project_bringup, "config", "iris_3d_lidar_bridge_drone1.yaml"
                 ),
-                "qos_overrides./tf_static.publisher.durability": "transient_local",
+                # "qos_overrides./tf_static.publisher.durability": "transient_local",
+                # "qos_overrides./lidar/points.publisher.durability": "volatile",# これ効いてない
+                # "qos_overrides./lidar/points.publisher.reliability": "best_effort",
             }
         ],
         remappings=[
@@ -216,7 +193,7 @@ def generate_launch_description() -> LaunchDescription:
         launch_arguments
         + [OpaqueFunction(function=launch_robot_state_publisher)]
         + [OpaqueFunction(function=launch_spawn_robot)]
-        # + [OpaqueFunction(function=launch_bridge)]
+        + [OpaqueFunction(function=launch_bridge)]
     )
 
 
@@ -263,18 +240,5 @@ def generate_launch_arguments() -> List[DeclareLaunchArgument]:
             "Y",
             default_value="0",
             description="The intial yaw angle (radians).",
-        ),
-        # SITL launch arguments.
-        DeclareLaunchArgument(
-            "instance",
-            default_value="0",
-            description="Set instance of SITL "
-            "(adds 10*instance to all port numbers).",
-        ),
-        # Optional SITL launch arguments.
-        DeclareLaunchArgument(
-            "sysid",
-            default_value="",
-            description="Set SYSID_THISMAV.",
         ),
     ]

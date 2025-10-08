@@ -61,41 +61,99 @@ def generate_launch_description():
     num_rows = 1
     num_cols = 2
     num_robots = num_rows * num_cols
-    robots = []
-    for i in range(num_robots):
-        col = i % num_cols
-        row = i // num_cols
-        pos_x = float(col - (num_cols - 1) / 2.0)
-        pos_y = float(row - (num_rows - 1) / 2.0)
-        pos_yaw = 0.0
 
-        robot = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [
-                    PathJoinSubstitution(
-                        [
-                            FindPackageShare("ardupilot_gz_bringup"),
-                            "launch",
-                            "robots",
-                            "iris_3dlidar.launch.py",
-                        ]
-                    ),
-                ]
-            ),
-            launch_arguments={
-                "model": "iris_with_3dlidar",
-                "name": f"iris{i}",
-                "x": f"{pos_x}",
-                "y": f"{pos_y}",
-                "z": "0.2",
-                "R": "0.0",
-                "P": "0.0",
-                "Y": f"{pos_yaw}",
-                "instance": f"{i}",
-                "sysid": f"{i + 1}",
-            }.items(),
-        )
-        robots.append(robot)
+    # robots = []
+    # for i in range(num_robots):
+    #     col = i % num_cols
+    #     row = i // num_cols
+    #     pos_x = float(col - (num_cols - 1) / 2.0)
+    #     pos_y = float(row - (num_rows - 1) / 2.0)
+    #     pos_yaw = 0.0
+
+    #     robot = IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource(
+    #             [
+    #                 PathJoinSubstitution(
+    #                     [
+    #                         FindPackageShare("ardupilot_gz_bringup"),
+    #                         "launch",
+    #                         "robots",
+    #                         "iris_3dlidar.launch.py",
+    #                     ]
+    #                 ),
+    #             ]
+    #         ),
+    #         launch_arguments={
+    #             "model": "iris_with_3dlidar",
+    #             "name": f"iris{i}",
+    #             "x": f"{pos_x}",
+    #             "y": f"{pos_y}",
+    #             "z": "0.2",
+    #             "R": "0.0",
+    #             "P": "0.0",
+    #             "Y": f"{pos_yaw}",
+    #             "instance": f"{i}",
+    #             "sysid": f"{i + 1}",
+    #         }.items(),
+    #     )
+    #     robots.append(robot)
+
+    robots = []
+
+    # iris_with_3dlidar
+    robot1 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ardupilot_gz_bringup"),
+                        "launch",
+                        "robots",
+                        "iris_3dlidar_drone1.launch.py",
+                    ]
+                ),
+            ]
+        ),
+        launch_arguments={
+            "model": "iris_with_3dlidar",
+            "name": "iris0",
+            "x": "0.0",
+            "y": "0.0",
+            "z": "0.2",
+            "R": "0.0",
+            "P": "0.0",
+            "Y": "0.0",
+        }.items(),
+    )
+
+    # iris_with_3dlidar_2
+    robot2 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ardupilot_gz_bringup"),
+                        "launch",
+                        "robots",
+                        "iris_3dlidar_drone2.launch.py",
+                    ]
+                ),
+            ]
+        ),
+        launch_arguments={
+            "model": "iris_with_3dlidar_2",
+            "name": "iris1",
+            "x": "1.0",
+            "y": "0.0",
+            "z": "0.2",
+            "R": "0.0",
+            "P": "0.0",
+            "Y": "0.0",
+        }.items(),
+    )
+
+    robots.append(robot1)
+    robots.append(robot2)
 
     # Gazebo.
     gz_sim_server = IncludeLaunchDescription(

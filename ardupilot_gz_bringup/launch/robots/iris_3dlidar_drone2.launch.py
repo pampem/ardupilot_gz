@@ -54,106 +54,19 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
-
-def launch_sitl_dds(
-    context: LaunchContext, *args, **kwargs
-) -> List[LaunchDescriptionEntity]:
-    """Return a SITL DDS launch description."""
-    # Packages.
-    pkg_ardupilot_sitl = get_package_share_directory("ardupilot_sitl")
-    pkg_ardupilot_gazebo = get_package_share_directory("ardupilot_gazebo")
-
-    # Required arguments.
-    name = LaunchConfiguration("name").perform(context)
-    instance = int(LaunchConfiguration("instance").perform(context))
-
-    # Optional arguments.
-    sysid = LaunchConfiguration("sysid").perform(context)
-    if not sysid:
-        sysid = instance + 1
-
-    print("launch_sitl_dds")
-    print(f"sysid:            {sysid}")
-
-    # ports
-    port_offset = 10 * instance
-    master_port = 5760 + port_offset
-    sitl_port = 5501 + port_offset
-    sim_address = "127.0.0.1"
-
-    # Include component launch files.
-    sitl_dds = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                PathJoinSubstitution(
-                    [
-                        FindPackageShare("ardupilot_sitl"),
-                        "launch",
-                        "sitl_dds_udp.launch.py",
-                    ]
-                ),
-            ]
-        ),
-        launch_arguments={
-            # micro_ros_agent
-            "transport": "udp4",
-            "micro_ros_agent_ns": f"{name}", #これ効いてなくない?
-            "refs": PathJoinSubstitution(
-                [
-                    FindPackageShare("ardupilot_sitl"),
-                    "config",
-                    #"dds_xrce_profile.xml",　# これ今はない。AP_DDS/libraries/以下に過去存在したが、現在Obsolate. これを新規作成する?
-                    f"{name}dds_multiple_drone_ns_setting.xml", # Add, this file is below ardupilot_sitl/config/
-                ]
-            ),
-            "port": "2019",
-            # ardupilot_sitl
-            "synthetic_clock": "True",
-            "wipe": "False",
-            "model": "json", # model jsonってなに?　普通quadとかなんだけど。
-            "speedup": "1",
-            "slave": "0",
-            "instance": f"{instance}",
-            "sysid": f"{sysid}",
-            "defaults": os.path.join(
-                pkg_ardupilot_gazebo,
-                "config",
-                "gazebo-iris-gimbal.parm",
-            )
-            + ","
-            + os.path.join(
-                pkg_ardupilot_sitl,
-                "config",
-                "default_params",
-                "dds_udp.parm", #ここでDDS_ENABLE 1とDDS_UDP_PORT 2019を設定している
-            ),
-            "sim_address": f"{sim_address}",
-            # mavproxy
-            "master": f"tcp:{sim_address}:{master_port}",
-            "sitl": f"{sim_address}:{sitl_port}",
-        }.items(),
-    )
-    return [sitl_dds] # これ、最終的に以下のコマンドが打たれることになる。
-# arducopter --model quad --speedup 1 --slave 0 --sim-address=127.0.0.1 --instance 0 --defaults <path_to_defaults_file> --wipe --synthetic-clock --home <home_location> --rate <rate> --gimbal <gimbal> --base-port <base_port> --rc-in-port <rc_in_port> --sim-port-in <sim_port_in> --sim-port-out <sim_port_out> --irlock-port <irlock_port> --start-time <start_time> --sysid <sysid>
-# まあこんな感じ。arducopter.pyっていうのがautotest以下にあって、それを呼んでる感じ。
-# 例によって、autotest以下にPathを通していないといけないので、現状だとcdしてpython3 arducopter ~~ をする必要があるね。
-# でもこれって、sim_vehicle.pyでやれることと変わらないのでは。gazeboとの連携ができない原因がこれを使っていないことなのか?
-# unlikely.
-
 def launch_robot_state_publisher(
     context: LaunchContext, *args, **kwargs
 ) -> List[LaunchDescriptionEntity]:
     """Return a robot state publisher launch description."""
     # Packages.
     pkg_ardupilot_gazebo = get_package_share_directory("ardupilot_gazebo")
+    pkg_ardupilot_gz_description = get_package_share_directory(
+        "ardupilot_gz_description"
+    )
 
     # Get substitutions for arguments.
+    model = LaunchConfiguration("model").perform(context)
     name = LaunchConfiguration("name").perform(context)
-    instance = int(LaunchConfiguration("instance").perform(context))
-
-    # Compute ports
-    port_offset = 10 * instance
-    control_port = 9002 + port_offset
 
     # Set `SDF_PATH` required by `sdformat_urdf`.
     if "GZ_SIM_RESOURCE_PATH" in os.environ:
@@ -166,36 +79,12 @@ def launch_robot_state_publisher(
 
     # Load SDF file.
     sdf_file = os.path.join(
-        pkg_ardupilot_gazebo, "models", "iris_with_gimbal", "model.sdf"
+        pkg_ardupilot_gz_description, "models", model, "model.sdf" # "もともとはpkg_ardupilot_gazebo"
     )
     with open(sdf_file, "r") as infp:
         robot_desc = infp.read()
 
-    # Update SDFormat:
-    #
-    # <include> iris_with_standoffs
-    #   <name>iris</name>
-    #
-    # OdometryPublisher frames
-    #   <odom_frame>iris/odom</odom_frame>
-    #   <robot_base_frame>iris</robot_base_frame>
-    #
-    # ArduPilotPlugin port
-    #   <fdm_port_in>9002</fdm_port_in>
-    #
-    robot_desc = robot_desc.replace("<name>iris</name>", f"<name>{name}</name>")
-    robot_desc = robot_desc.replace(
-        "<odom_frame>iris/odom</odom_frame>", f"<odom_frame>{name}/odom</odom_frame>"
-    )
-    robot_desc = robot_desc.replace(
-        "<robot_base_frame>iris</robot_base_frame>",
-        f"<robot_base_frame>{name}</robot_base_frame>",
-    )
-    robot_desc = robot_desc.replace(
-        "<fdm_port_in>9002</fdm_port_in>", f"<fdm_port_in>{control_port}</fdm_port_in>"
-    )
-
-    print(robot_desc)
+    # print(robot_desc)
 
     # Remap the `tf` and `tf_static` under `ignore` to prevent conflicts.
     robot_state_publisher = Node(
@@ -280,9 +169,11 @@ def launch_bridge(
         parameters=[
             {
                 "config_file": os.path.join(
-                    pkg_project_bringup, "config", "iris_bridge_multi.yaml"
+                    pkg_project_bringup, "config", "iris_3d_lidar_bridge_drone2.yaml"
                 ),
-                "qos_overrides./tf_static.publisher.durability": "transient_local",
+                # "qos_overrides./tf_static.publisher.durability": "transient_local",
+                # "qos_overrides./lidar/points.publisher.durability": "volatile",# これ効いてない
+                # "qos_overrides./lidar/points.publisher.reliability": "best_effort",
             }
         ],
         remappings=[
@@ -300,7 +191,6 @@ def generate_launch_description() -> LaunchDescription:
 
     return LaunchDescription(
         launch_arguments
-        # + [OpaqueFunction(function=launch_sitl_dds)]
         + [OpaqueFunction(function=launch_robot_state_publisher)]
         + [OpaqueFunction(function=launch_spawn_robot)]
         + [OpaqueFunction(function=launch_bridge)]
@@ -350,18 +240,5 @@ def generate_launch_arguments() -> List[DeclareLaunchArgument]:
             "Y",
             default_value="0",
             description="The intial yaw angle (radians).",
-        ),
-        # SITL launch arguments.
-        DeclareLaunchArgument(
-            "instance",
-            default_value="0",
-            description="Set instance of SITL "
-            "(adds 10*instance to all port numbers).",
-        ),
-        # Optional SITL launch arguments.
-        DeclareLaunchArgument(
-            "sysid",
-            default_value="",
-            description="Set SYSID_THISMAV.",
         ),
     ]
