@@ -1,5 +1,5 @@
 ---
-- ros_topic_name: "clock"
+- ros_topic_name: "/clock" # iris0/clockとしない。use_sim_time用途であるのでこの設定が必要。
   gz_topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
