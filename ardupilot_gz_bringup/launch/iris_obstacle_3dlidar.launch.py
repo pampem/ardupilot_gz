@@ -103,7 +103,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "gz_args": "-v4 -s -r "
-            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map_surrounded_many.sdf"}' # このモデルではドローンはIncludeされていない。
+            + f'{Path(pkg_project_gazebo) / "worlds" / "obstacle_map_surrounded_so_many.sdf"}' # このモデルではドローンはIncludeされていない。
         }.items(),
     )
 

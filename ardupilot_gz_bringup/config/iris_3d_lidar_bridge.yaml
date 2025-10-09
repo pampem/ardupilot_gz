@@ -26,13 +26,13 @@
   direction: GZ_TO_ROS
 
 - ros_topic_name: "lidar/imu" # Topic名、/lidar/imuなどと先頭にSlashをつけるとnamespaceが適用されなくなる。(iris0/~~のようにならなくなる。)
-  gz_topic_name: "/lidarimu"
+  gz_topic_name: "/world/map/model/iris0/link/base_scan/sensor/imu_sensor/imu"
   ros_type_name: "sensor_msgs/msg/Imu"
   gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS
 
 - ros_topic_name: "lidar/points"
-  gz_topic_name: "/lidar/points"
+  gz_topic_name: "/world/map/model/iris0/link/base_scan/sensor/gpu_lidar/scan/points"
   ros_type_name: "sensor_msgs/msg/PointCloud2"
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
