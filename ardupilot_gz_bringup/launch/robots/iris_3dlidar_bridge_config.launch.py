@@ -59,7 +59,6 @@ def launch_robot_state_publisher(
 ) -> List[LaunchDescriptionEntity]:
     """Return a robot state publisher launch description."""
     # Packages.
-    pkg_ardupilot_gazebo = get_package_share_directory("ardupilot_gazebo")
     pkg_ardupilot_gz_description = get_package_share_directory(
         "ardupilot_gz_description"
     )
@@ -83,8 +82,20 @@ def launch_robot_state_publisher(
     )
     with open(sdf_file, "r") as infp:
         robot_desc = infp.read()
+    with open(sdf_file, "r") as infp:
+        robot_desc = infp.read()
 
-    # print(robot_desc)
+    # robot_desc = robot_desc.replace("<name>iris</name>", f"<name>{name}</name>")
+    # robot_desc = robot_desc.replace(
+    #     "<odom_frame>iris/odom</odom_frame>", f"<odom_frame>{name}/odom</odom_frame>"
+    # )
+    # robot_desc = robot_desc.replace(
+    #     "<robot_base_frame>iris</robot_base_frame>",
+    #     f"<robot_base_frame>{name}</robot_base_frame>",
+    # )
+    # robot_desc = robot_desc.replace(
+    #     "<fdm_port_in>9002</fdm_port_in>", f"<fdm_port_in>{control_port}</fdm_port_in>"
+    # )
 
     # Remap the `tf` and `tf_static` under `ignore` to prevent conflicts.
     robot_state_publisher = Node(
@@ -154,14 +165,12 @@ def launch_bridge(
     context: LaunchContext, *args, **kwargs
 ) -> List[LaunchDescriptionEntity]:
     """Return a ros_gz_bridge action."""
-    # Packages.
     pkg_project_bringup = get_package_share_directory("ardupilot_gz_bringup")
 
-    # Retrieve launch arguments.
+    # Launch argument から設定を取得
     name = LaunchConfiguration("name").perform(context)
+    bridge_config = LaunchConfiguration("bridge_config").perform(context)
 
-    # Bridge - launching the node in a namespace also places the /tf
-    # in a namespace, so we need to undo the mapping.
     bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
@@ -169,11 +178,8 @@ def launch_bridge(
         parameters=[
             {
                 "config_file": os.path.join(
-                    pkg_project_bringup, "config", "iris_3d_lidar_bridge_drone1.yaml"
+                    pkg_project_bringup, "config", bridge_config
                 ),
-                # "qos_overrides./tf_static.publisher.durability": "transient_local",
-                # "qos_overrides./lidar/points.publisher.durability": "volatile",# これ効いてない
-                # "qos_overrides./lidar/points.publisher.reliability": "best_effort",
             }
         ],
         remappings=[
@@ -183,7 +189,6 @@ def launch_bridge(
         output="screen",
     )
     return [bridge]
-
 
 def generate_launch_description() -> LaunchDescription:
     """Generate a launch description for a iris quadcopter."""
@@ -240,5 +245,10 @@ def generate_launch_arguments() -> List[DeclareLaunchArgument]:
             "Y",
             default_value="0",
             description="The intial yaw angle (radians).",
+        ),
+        DeclareLaunchArgument(
+            "bridge_config",
+            default_value="iris_3d_lidar_bridge.yaml",
+            description="Name of the ros_gz_bridge config YAML file.",
         ),
     ]

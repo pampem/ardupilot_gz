@@ -51,7 +51,6 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     """Generate a launch description for a iris quadcopter."""
-    pkg_project_bringup = get_package_share_directory("ardupilot_gz_bringup")
     pkg_project_gazebo = get_package_share_directory("ardupilot_gz_gazebo")
     pkg_ros_gz_sim = get_package_share_directory("ros_gz_sim")
 
@@ -100,7 +99,6 @@ def generate_launch_description():
 
     robots = []
 
-    # iris_with_3dlidar
     robot1 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -109,7 +107,7 @@ def generate_launch_description():
                         FindPackageShare("ardupilot_gz_bringup"),
                         "launch",
                         "robots",
-                        "iris_3dlidar_drone1.launch.py",
+                        "iris_3dlidar_bridge_config.launch.py",
                     ]
                 ),
             ]
@@ -117,6 +115,7 @@ def generate_launch_description():
         launch_arguments={
             "model": "iris_with_3dlidar",
             "name": "iris0",
+            "bridge_config": "iris_3d_lidar_bridge_drone1.yaml",
             "x": "0.0",
             "y": "0.0",
             "z": "0.2",
@@ -126,7 +125,6 @@ def generate_launch_description():
         }.items(),
     )
 
-    # iris_with_3dlidar_2
     robot2 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -135,7 +133,7 @@ def generate_launch_description():
                         FindPackageShare("ardupilot_gz_bringup"),
                         "launch",
                         "robots",
-                        "iris_3dlidar_drone2.launch.py",
+                        "iris_3dlidar_bridge_config.launch.py",
                     ]
                 ),
             ]
@@ -143,7 +141,33 @@ def generate_launch_description():
         launch_arguments={
             "model": "iris_with_3dlidar_2",
             "name": "iris1",
+            "bridge_config": "iris_3d_lidar_bridge_drone2.yaml",
             "x": "1.0",
+            "y": "0.0",
+            "z": "0.2",
+            "R": "0.0",
+            "P": "0.0",
+            "Y": "0.0",
+        }.items(),
+    )
+    robot3 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("ardupilot_gz_bringup"),
+                        "launch",
+                        "robots",
+                        "iris_3dlidar_bridge_config.launch.py",
+                    ]
+                ),
+            ]
+        ),
+        launch_arguments={
+            "model": "iris_with_3dlidar_3",
+            "name": "iris2",
+            "bridge_config": "iris_3d_lidar_bridge_drone3.yaml",
+            "x": "2.0",
             "y": "0.0",
             "z": "0.2",
             "R": "0.0",
@@ -154,8 +178,8 @@ def generate_launch_description():
 
     robots.append(robot1)
     robots.append(robot2)
+    robots.append(robot3)
 
-    # Gazebo.
     gz_sim_server = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             f'{Path(pkg_ros_gz_sim) / "launch" / "gz_sim.launch.py"}'
@@ -173,18 +197,6 @@ def generate_launch_description():
         launch_arguments={"gz_args": "-v4 -g"}.items(),
     )
 
-    # return LaunchDescription(
-    #     [
-    #         DeclareLaunchArgument(
-    #             "rviz", default_value="true", description="Open RViz."
-    #         ),
-    #         gz_sim_server,
-    #         gz_sim_gui,
-    #         iris,
-    #         rviz,
-    #     ]
-    # )
-
     return LaunchDescription(
         launch_arguments
         + [
@@ -192,9 +204,6 @@ def generate_launch_description():
             gz_sim_gui,
         ]
         + robots
-        # + [
-        #     rviz,
-        # ]
     )
 
 
